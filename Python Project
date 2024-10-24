@@ -1,0 +1,88 @@
+import tkinter as tk 
+from tkinter import messagebox 
+import me 
+import threading 
+import winsound  # Built-in sound module for Windows 
+ 
+# Func on to set the alarm 
+def set_alarm(): 
+    alarm_me = f"{hour.get()}:{minute.get()}:{second.get()}" 
+    messagebox.showinfo("Alarm Set", f"Alarm is set for {alarm_me}") 
+    while True: 
+        current_me = me.str ime("%H:%M:%S") 
+        if current_me == alarm_me: 
+            ring_alarm() 
+            break 
+        me.sleep(1) 
+ 
+# Func on to ring the alarm 
+def ring_alarm(): 
+    label_alarm_status.config(text="Time's Up!", fg="white", bg="#ff4747") 
+    root.update() 
+ 
+    # Play sound using winsound for Windows users 
+    winsound.PlaySound("alarm_sound.wav", winsound.SND_FILENAME) 
+     
+    messagebox.showinfo("Alarm", "Time to wake up!") 
+ 
+# Func on to start the alarm in a separate thread 
+10 
+ 
+def start_alarm_thread(): 
+    t = threading.Thread(target=set_alarm) 
+    t.start() 
+ 
+# Ini alize Tkinter window 
+root = tk.Tk() 
+root. tle("Alarm Clock") 
+root.geometry("500x400") 
+root.config(bg="#ffffff") 
+ 
+# Title Label with custom font and gradient background 
+label_ tle = tk.Label(root, text="Wake-Up Alarm", font=("Helve ca", 28, "bold"), fg="white", 
+bg="#6a11cb", width=25) 
+label_ tle.pack(pady=30) 
+ 
+# Time Input Frame with rounded corners and styled background 
+frame_me_input = tk.Frame(root, bg="#f7f7f7", bd=2, relief="solid", padx=20, pady=10) 
+frame_me_input.pack(pady=20) 
+ 
+# Hour input 
+label_hour = tk.Label(frame_me_input, text="Hour", font=("Helve ca", 14), bg="#f7f7f7") 
+label_hour.grid(row=0, column=0, padx=10) 
+hour = tk.Entry(frame_me_input, width=5, font=("Helve ca", 14), jus fy="center") 
+hour.grid(row=1, column=0, padx=10) 
+ 
+# Minute input 
+label_minute = tk.Label(frame_me_input, text="Minute", font=("Helve ca", 14), bg="#f7f7f7") 
+label_minute.grid(row=0, column=1, padx=10) 
+minute = tk.Entry(frame_me_input, width=5, font=("Helve ca", 14), jus fy="center") 
+minute.grid(row=1, column=1, padx=10) 
+ 
+11 
+ 
+# Second input 
+label_second = tk.Label(frame_me_input, text="Second", font=("Helve ca", 14), bg="#f7f7f7") 
+label_second.grid(row=0, column=2, padx=10) 
+second = tk.Entry(frame_me_input, width=5, font=("Helve ca", 14), jus fy="center") 
+second.grid(row=1, column=2, padx=10) 
+ 
+# Set Alarm Bu on with hover effect 
+def on_enter(e): 
+    bu on_set_alarm['bg'] = '#ff6363' 
+ 
+def on_leave(e): 
+    bu on_set_alarm['bg'] = '#6a11cb' 
+ 
+bu on_set_alarm = tk.Bu on(root, text="Set Alarm", font=("Helve ca", 18, "bold"), bg="#6a11cb", 
+fg="white", width=15, command=start_alarm_thread) 
+bu on_set_alarm.pack(pady=30) 
+bu on_set_alarm.bind("<Enter>", on_enter) 
+bu on_set_alarm.bind("<Leave>", on_leave) 
+ 
+# Alarm status label 
+label_alarm_status = tk.Label(root, font=("Helve ca", 14), bg="#ffffff") 
+label_alarm_status.pack(pady=10) 
+ 
+# Run the app 
+root.mainloop()
